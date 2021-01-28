@@ -7,7 +7,7 @@ export default function HourColumn() {
         <div key={index} style={{ height: 80 }} className="relative">
           <span
             style={{ position: 'absolute', top: '-10px' }}
-          >{`${index}AM`}</span>
+          >{`${index}:00`}</span>
         </div>
       ))}
     </div>
