@@ -47,6 +47,7 @@ function Shift({ data: { num_quarter, quarter_start, shift_id }, onResize }) {
       dragGrid={[10, 20]}
       dragAxis="y"
       bounds=".day"
+      onMouseUp={() => console.log('mouse up')}
     >
       <ShiftModal show={showModal} onClose={() => setShowModal(0)} />
       <ShiftContent
@@ -58,12 +59,6 @@ function Shift({ data: { num_quarter, quarter_start, shift_id }, onResize }) {
   )
 }
 
-Shift.propTypes = {
-  quarterStart: PropTypes.number.isRequired,
-  numQuarter: PropTypes.number.isRequired,
-  date: PropTypes.string,
-  title: PropTypes.string,
-  description: PropTypes.string,
-}
+Shift.propTypes = {}
 
 export default Shift
