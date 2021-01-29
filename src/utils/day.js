@@ -1,9 +1,4 @@
-import dayjs from 'dayjs'
-import * as weekday from 'dayjs/plugin/weekday' // import plugin
-import * as updateLocale from 'dayjs/plugin/updateLocale' // import plugin
-
 // convert integer date to string
-
 function getDateStringFromInt(int) {
   const str = String(int)
   const year = str.substring(0, 4)
