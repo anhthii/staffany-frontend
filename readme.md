@@ -11,10 +11,11 @@ Additional:
 
 ## Notes
 - The implementation is heavily inspired by google calendar
-- I'm not too familiar with typescript so I decided to with plain javascript on this project but I can pick up typescript quickly if the job requires.
+- I'm not too familiar with typescript so I decided to go with plain javascript on this project but I can pick up typescript quickly if the job requires.
 
 ## Bugs are not resolved
 - After dragging, resizing a shift and reload the pages, the shift doesn't appear correctly (I'm investigating on this, :'())
+- Clicking on cells may generate duplicate shifts. 
 
 
 ## Behavior
