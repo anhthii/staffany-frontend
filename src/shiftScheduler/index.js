@@ -1,19 +1,22 @@
-import React, { useEffect, useReducer } from 'react'
-import { fetchCurrentWeek, createShift } from './api'
+import React, { useEffect, useReducer, useContext } from 'react'
+import { fetchCurrentWeek, createShift, updateShift, deleteShift } from './api'
 
 import dayjs from 'dayjs'
 import WeekDateColumn from './components/WeekDateColumn'
 import HourColumn from './components/HourColumn'
+
 import shiftReducer from './reducer'
 import * as actions from './actions'
 import { getDayName } from '../utils/day'
+import { getUserID } from '../utils/user'
+import findIndex from 'lodash.findindex'
 
 const initialState = {}
 export default function ShiftScheduler() {
   const [state, dispatch] = useReducer(shiftReducer, initialState)
 
   useEffect(() => {
-    fetchCurrentWeek(1)
+    fetchCurrentWeek(getUserID())
       .then(({ data }) => {
         dispatch(actions.setCurrentWeek(data))
       })
@@ -26,7 +29,11 @@ export default function ShiftScheduler() {
   }
 
   const resizeShift = (id, date, numQuarter) => {
-    dispatch(actions.resizeShift(id, date, numQuarter))
+    const shift = findShiftByID(state, id, date)
+    shift.startQuarter = numQuarter
+    updateShift(shift)
+      .then(() => dispatch(actions.resizeShift(id, date, numQuarter)))
+      .catch((e) => console.log(e))
   }
 
   const addShift = (shift) => {
@@ -35,6 +42,31 @@ export default function ShiftScheduler() {
         shift.id = data.shift_id
         dispatch(actions.addShift(shift, shift.date))
       })
+      .catch((e) => console.log(e))
+  }
+
+  const findShiftByID = (state, id, date) => {
+    const shifts = state.dates[date].shifts
+    const index = findIndex(shifts, { id })
+    const shift = shifts[index]
+    return { ...shift }
+  }
+
+  const updateShiftPosition = (id, date, startQuarter) => {
+    const shift = findShiftByID(state, id, date)
+    shift.startQuarter = startQuarter
+    updateShift(shift)
+      .then(() => dispatch(actions.updateShiftPosition(id, date, startQuarter)))
+      .catch((e) => console.log(e))
+  }
+
+  const deleteShiftHandler = (id, date) => {
+    deleteShift(id, id).then(() => dispatch(actions.deleteShift(id, date)))
+  }
+
+  const updateShiftContent = (shift, id, date) => {
+    updateShift(shift)
+      .then(() => dispatch(actions.updateShiftContent(shift, id, date)))
       .catch((e) => console.log(e))
   }
 
@@ -53,7 +85,10 @@ export default function ShiftScheduler() {
             key={date}
             date={date}
             data={state.dates[date]}
-            resizeShift={resizeShift}
+            onShiftResize={resizeShift}
+            onShiftDrag={updateShiftPosition}
+            onShiftUpdate={updateShiftContent}
+            onShiftDelete={deleteShiftHandler}
             onClick={addShift}
           />
         ))}

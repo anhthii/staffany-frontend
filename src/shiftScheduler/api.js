@@ -24,13 +24,13 @@ const createShift = (params, weekID) => {
   })
 }
 
-const updateShift = (params, weekID) => {
-  const updateShiftURL = `${API_PREFIX}/shifts/${params.shift_id}/`
+const updateShift = (params) => {
+  const updateShiftURL = `${API_PREFIX}/shifts/${params.id}`
 
   return axios.put(updateShiftURL, {
     date_id: params.date_id,
     date: params.date,
-    user_id: params.userID,
+    user_id: params.user_id,
     quarter_start: params.quarter_start,
     num_quarter: params.num_quarter,
     title: params.title,
@@ -38,9 +38,9 @@ const updateShift = (params, weekID) => {
   })
 }
 
-const deleteShift = (params, weekID) => {
-  const deleteShiftURL = `${API_PREFIX}/weeks/${weekID}/`
-  return axios.del(deleteShiftURL)
+const deleteShift = (params, shiftID) => {
+  const deleteShiftURL = `${API_PREFIX}/shifts/${shiftID}`
+  return axios.delete(deleteShiftURL)
 }
 
 export { fetchCurrentWeek, createShift, updateShift, deleteShift }

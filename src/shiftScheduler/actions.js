@@ -2,6 +2,9 @@ import {
   TYPE_ADD_SHIFT,
   TYPE_SET_CURRENT_WEEK,
   TYPE_RESIZE_SHIFT,
+  TYPE_UPDATE_SHIFT_POSITION,
+  TYPE_UPDATE_SHIFT,
+  TYPE_DELETE_SHIFT,
 } from './constant'
 
 import {
@@ -31,6 +34,18 @@ export function resizeShift(id, date, numQuarter) {
   }
 }
 
+export function updateShiftContent(shift, id, date) {
+  return { type: TYPE_UPDATE_SHIFT, shift, id, date }
+}
+
+export function updateShiftPosition(id, date, quarterStart) {
+  return { type: TYPE_UPDATE_SHIFT_POSITION, id, date, quarterStart }
+}
+
 export function addShift(shift, date) {
   return { type: TYPE_ADD_SHIFT, shift, date }
+}
+
+export function deleteShift(id, date) {
+  return { type: TYPE_DELETE_SHIFT, id, date }
 }
