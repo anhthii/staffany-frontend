@@ -14,7 +14,7 @@ export default function shiftReducer(state = {}, action) {
 
     case constants.TYPE_ADD_SHIFT: {
       const nextState = produce(state, (draftState) => {
-        draftState.dates[action.date].shifts.push(action.shift)
+        draftState.dates[action.date] = action.dateObj
       })
 
       return nextState

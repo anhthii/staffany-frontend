@@ -42,8 +42,8 @@ export function updateShiftPosition(id, date, quarterStart) {
   return { type: TYPE_UPDATE_SHIFT_POSITION, id, date, quarterStart }
 }
 
-export function addShift(shift, date) {
-  return { type: TYPE_ADD_SHIFT, shift, date }
+export function addShift(date, dateObj) {
+  return { type: TYPE_ADD_SHIFT, date, dateObj }
 }
 
 export function deleteShift(id, date) {

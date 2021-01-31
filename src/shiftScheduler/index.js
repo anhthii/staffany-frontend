@@ -38,9 +38,9 @@ export default function ShiftScheduler() {
 
   const addShift = (shift) => {
     createShift(shift, state.week_id)
-      .then(({ data }) => {
-        shift.id = data.shift_id
-        dispatch(actions.addShift(shift, shift.date))
+      // return data with newDateObj contains the created shift
+      .then(({ data: { date: dateObj } }) => {
+        dispatch(actions.addShift(shift.date, dateObj))
       })
       .catch((e) => console.log(e))
   }
