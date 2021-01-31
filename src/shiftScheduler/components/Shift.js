@@ -9,7 +9,7 @@ import debounce from 'lodash.debounce'
 
 function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
   const handleOnDrag = (e) => {
-    setDragging(true)
+    setMoving(true)
     // stopPropagation to prevent click event from triggering on the weekDateColumn component
     e.stopPropagation()
   }
@@ -18,11 +18,11 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
     e.stopPropagation()
   }
 
-  const [dragging, setDragging] = useState(false)
+  const [moving, setMoving] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
   const handleOnResize = (e, direction, ref, delta, position, id) => {
-    setDragging(true)
+    setMoving(true)
     const height = Number(ref.style.height.replace('px', ''))
     const numQuarter = height / QUARTER_HEIGHT
     onResize(id, date, numQuarter)
@@ -34,7 +34,7 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
   )
 
   const handleOnDragStop = (e, d, id) => {
-    if (!dragging) {
+    if (!moving) {
       return
     }
 
@@ -45,13 +45,13 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
   }
 
   const handleOnClick = (e) => {
-    if (dragging) {
+    if (moving) {
       // dragging event ignore
     } else {
       setShowModal(true)
     }
 
-    setDragging(false)
+    setMoving(false)
   }
 
   const { num_quarter, quarter_start, id, title, description } = data
