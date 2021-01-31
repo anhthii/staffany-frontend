@@ -10,15 +10,13 @@ export default function ShiftContent({
 }) {
   return (
     <div
-      style={{
-        background: '#87CEEB',
-        height: '100%',
-        border: '1px solid black',
-      }}
-      className="relative"
+      className="relative h-full shadow-lg rounded-md text-white p-1 text-xs overflow-hidden"
+      style={{ backgroundColor: '#506669', borderLeft: '5px solid #65bee0' }}
     >
-      {start} - {end}
-      <span className="ml-2">{title.substring(0, 5) + '...'}</span>
+      <span className="">{title}</span>
+      <div className="">
+        {start} - {end}
+      </div>
     </div>
   )
 }

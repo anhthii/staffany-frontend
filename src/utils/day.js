@@ -19,9 +19,38 @@ function generateWeekDates(weekDateStart) {
   return week
 }
 
+function isToday(date) {
+  return new Date().toISOString().slice(0, 10) == date
+}
+
 function getDayName(dateStr, locale) {
   var date = new Date(dateStr)
   return date.toLocaleDateString(locale, { weekday: 'long' })
 }
 
-export { getDateStringFromInt, generateWeekDates, getDayName }
+function getMonthName(i) {
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
+
+  return months[i]
+}
+
+export {
+  getDateStringFromInt,
+  generateWeekDates,
+  getDayName,
+  isToday,
+  getMonthName,
+}

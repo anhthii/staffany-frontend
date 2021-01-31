@@ -28,8 +28,8 @@ function WeekDateColumn({
     // calculate current hour from the current mouse click position
     const hour = Math.floor(y / hourHeight)
 
+    resetData()
     setHour(hour)
-
     setShowModal(true)
   }
 

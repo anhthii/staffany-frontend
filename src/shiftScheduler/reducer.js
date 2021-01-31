@@ -9,6 +9,7 @@ export default function shiftReducer(state = {}, action) {
         weekDates: action.weekDates,
         dates: action.dates,
         week_id: action.week_id,
+        start_date: action.start_date,
       }
     }
 

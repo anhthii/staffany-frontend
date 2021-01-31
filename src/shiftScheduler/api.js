@@ -9,6 +9,11 @@ const fetchCurrentWeek = (userID) => {
   return axios.get(currentWeekURL)
 }
 
+const fetchWeekByDate = (userID, date) => {
+  const weekURL = `${API_PREFIX}/weeks/get_by_date?date=${date}&user_id=${userID}`
+  return axios.get(weekURL)
+}
+
 const createShift = (params, weekID) => {
   const createShiftURL = `${API_PREFIX}/weeks/${weekID}/shifts`
 
@@ -43,4 +48,10 @@ const deleteShift = (params, shiftID) => {
   return axios.delete(deleteShiftURL)
 }
 
-export { fetchCurrentWeek, createShift, updateShift, deleteShift }
+export {
+  fetchCurrentWeek,
+  createShift,
+  updateShift,
+  deleteShift,
+  fetchWeekByDate,
+}

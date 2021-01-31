@@ -11,9 +11,9 @@ const endTime = (quarterStart, numQuarter) => {
 
 function timeConvert(n, startOrEnd) {
   var num = n
-  if (startOrEnd === 'end' && num % 60 === 0) {
-    num = num - 1
-  }
+  // if (startOrEnd === 'end' && num % 60 === 0) {
+  //   num = num - 1
+  // }
 
   var hours = num / 60
   var rhours = Math.floor(hours)

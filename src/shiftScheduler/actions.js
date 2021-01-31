@@ -18,6 +18,7 @@ export function setCurrentWeek(data) {
     type: TYPE_SET_CURRENT_WEEK,
     weekDates: generateWeekDates(data.start_date),
     week_id: data.id,
+    start_date: data.start_date,
     dates: data.dates.reduce((acc, date) => {
       acc[getDateStringFromInt(date.date)] = date
       return acc
