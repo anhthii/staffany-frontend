@@ -1,27 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Rnd } from 'react-rnd'
 import { QUARTER_HEIGHT } from '../constant'
 import ShiftContent from './ShiftContent'
 import ShiftModal from './ShiftModal'
 import { endTime, startTime } from '../../utils/time'
+import debounce from 'lodash.debounce'
 
 function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
   const handleOnDrag = (e) => {
     setDragging(true)
+    // stopPropagation to prevent click event from triggering on the weekDateColumn component
     e.stopPropagation()
   }
+
   const onDragStart = (e) => {
     e.stopPropagation()
   }
+
   const [dragging, setDragging] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
   const handleOnResize = (e, direction, ref, delta, position, id) => {
+    setDragging(true)
     const height = Number(ref.style.height.replace('px', ''))
     const numQuarter = height / QUARTER_HEIGHT
     onResize(id, date, numQuarter)
   }
+
+  const debounceResize = useCallback(
+    debounce(handleOnResize, 100),
+    [] // will be created only once initially
+  )
 
   const handleOnDragStop = (e, d, id) => {
     if (!dragging) {
@@ -65,7 +75,7 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
         topLeft: false,
       }}
       onResize={(e, direction, ref, delta, position) => {
-        handleOnResize(e, direction, ref, delta, position, id)
+        debounceResize(e, direction, ref, delta, position, id)
       }}
       onClick={handleOnClick}
       allowAnyClick={true}

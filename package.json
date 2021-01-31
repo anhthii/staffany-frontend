@@ -9,6 +9,7 @@
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
     "immer": "^8.0.1",
+    "lodash.debounce": "^4.0.8",
     "lodash.findindex": "^4.6.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
