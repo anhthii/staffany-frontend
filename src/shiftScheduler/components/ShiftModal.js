@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 
 const customStyles = {
@@ -13,23 +13,33 @@ const customStyles = {
 }
 
 export default function ShiftModal({
-  title,
-  description,
+  data,
   show,
   onClose,
-  onUpdate,
   onDelete,
+  onSave,
+  setData,
+  resetData,
 }) {
-  const [titleValue, setTitle] = useState(title)
-  const [descValue, setDesc] = useState(description)
-
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
   }
 
-  const onSubmit = () => {
-    onUpdate(titleValue, descValue)
+  function handleOnSave() {
+    const newData = {
+      ...data,
+      title: data.title,
+      description: data.description,
+    }
+    onSave(newData)
+    // reset data
+    resetData()
     onClose()
+  }
+
+  function onFieldChange(e) {
+    const fieldName = e.target.name
+    setData({ ...data, [fieldName]: e.target.value })
   }
 
   const onOverlayClick = (e) => {
@@ -51,9 +61,10 @@ export default function ShiftModal({
       contentLabel="Example Modal"
       ariaHideApp={false}
     >
-      <div onClick={onOverlayClick}>
+      {/* <div onClick={onOverlayClick}> */}
+      <div>
         <div className="heading text-center font-bold text-2xl m-5 text-gray-800">
-          Event
+          Shift
         </div>
 
         <div className="editor mx-auto flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
@@ -61,16 +72,18 @@ export default function ShiftModal({
             className="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
             spellCheck="false"
             placeholder="Title"
+            name="title"
             type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            value={titleValue}
+            onChange={onFieldChange}
+            value={data.title}
           />
           <textarea
             className="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none"
             spellCheck="false"
             placeholder="Description"
-            value={descValue}
-            onChange={(e) => setDesc(e.target.value)}
+            value={data.description}
+            name="description"
+            onChange={onFieldChange}
           />
           {/* buttons */}
           <div className="buttons flex">
@@ -81,13 +94,13 @@ export default function ShiftModal({
               Close
             </div>
             <div
-              onClick={onSubmit}
+              onClick={handleOnSave}
               className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
             >
-              Update
+              Save
             </div>
             <div
-              onClick={onDelete}
+              onClick={onDelete.bind(null, data.id)}
               className="btn border p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-red-500"
             >
               Delete

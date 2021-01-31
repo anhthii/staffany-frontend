@@ -19,13 +19,6 @@ export default function ShiftContent({
     >
       {start} - {end}
       <span className="ml-2">{title.substring(0, 5) + '...'}</span>
-      <button
-        className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-1 rounded shadow hover:shadow-md outline-none focus:outline-none absolute right-2"
-        type="button"
-        onClick={onEditClick}
-      >
-        Edit
-      </button>
     </div>
   )
 }

@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import { Rnd } from 'react-rnd'
 import { QUARTER_HEIGHT } from '../constant'
 import ShiftContent from './ShiftContent'
-import ShiftModal from './ShiftModal'
 import { endTime, startTime } from '../../utils/time'
 import debounce from 'lodash.debounce'
 
-function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
+function Shift({ data, onResize, onDrag, setModalData, showModal, date }) {
   const handleOnDrag = (e) => {
     setMoving(true)
     // stopPropagation to prevent click event from triggering on the weekDateColumn component
@@ -19,7 +18,6 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
   }
 
   const [moving, setMoving] = useState(false)
-  const [showModal, setShowModal] = useState(false)
 
   const handleOnResize = (e, direction, ref, delta, position, id) => {
     setMoving(true)
@@ -48,7 +46,8 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
     if (moving) {
       // dragging event ignore
     } else {
-      setShowModal(true)
+      setModalData(data)
+      showModal()
     }
 
     setMoving(false)
@@ -88,19 +87,10 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
       bounds=".day"
       onMouseUp={() => console.log('mouse up')}
     >
-      <ShiftModal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        title={title}
-        description={description}
-        onUpdate={(title, desc) => onUpdate({ ...data, title, desc }, id, date)}
-        onDelete={() => onDelete(id, date)}
-      />
       <ShiftContent
         title={title}
         start={startTime(quarter_start)}
         end={endTime(quarter_start, num_quarter)}
-        onEditClick={() => setShowModal(true)}
       />
     </Rnd>
   )
