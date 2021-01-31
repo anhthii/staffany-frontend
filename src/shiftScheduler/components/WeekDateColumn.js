@@ -14,11 +14,12 @@ function WeekDateColumn({
 }) {
   const createShift = (e) => {
     // get distance form the week date column to the top
-    const top = e.target.offsetTop
+    const rect = e.target.getBoundingClientRect()
+    const y = e.clientY - rect.top
 
     const hourHeight = QUARTER_HEIGHT * 4
     // calculate current hour from the current mouse click position
-    const hour = Math.floor((e.clientY - top) / hourHeight)
+    const hour = Math.floor(y / hourHeight)
     const params = {
       // for example: hour - 0 => currentQuarter 1
       // hour - 1 => currentQuarter 5
