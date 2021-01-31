@@ -8,11 +8,13 @@ import { endTime, startTime } from '../../utils/time'
 
 function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
   const handleOnDrag = (e) => {
+    setDragging(true)
     e.stopPropagation()
   }
   const onDragStart = (e) => {
     e.stopPropagation()
   }
+  const [dragging, setDragging] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
   const handleOnResize = (e, direction, ref, delta, position, id) => {
@@ -22,9 +24,24 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
   }
 
   const handleOnDragStop = (e, d, id) => {
-    e.stopPropagation()
+    if (!dragging) {
+      return
+    }
+
     const currentQuarter = Math.floor(d.lastY / QUARTER_HEIGHT)
+
     onDrag(id, date, currentQuarter)
+    e.stopPropagation()
+  }
+
+  const handleOnClick = (e) => {
+    if (dragging) {
+      // dragging event ignore
+    } else {
+      setShowModal(true)
+    }
+
+    setDragging(false)
   }
 
   const { num_quarter, quarter_start, id, title, description } = data
@@ -50,6 +67,7 @@ function Shift({ data, onResize, onDrag, onUpdate, onDelete, date }) {
       onResize={(e, direction, ref, delta, position) => {
         handleOnResize(e, direction, ref, delta, position, id)
       }}
+      onClick={handleOnClick}
       allowAnyClick={true}
       size={{ height: num_quarter * QUARTER_HEIGHT, width: '100%' }}
       onDragStart={onDragStart}
