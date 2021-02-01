@@ -6,7 +6,7 @@ import Logo from '../logo.png'
 
 export default function LoginPage() {
   let history = useHistory()
-  const [username, setUsername] = useState('staffany')
+  const [username, setUsername] = useState('')
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <div className="w-4/12 flex content-center">
@@ -30,6 +30,7 @@ export default function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+            <p className="text-red text-xs italic">Enter your name</p>
           </div>
           {/* <div className="mb-6">
             <label
@@ -53,6 +54,11 @@ export default function LoginPage() {
               className="hover:bg-blue-dark bg-blue-500 text-white font-bold py-2 px-4 rounded"
               type="button"
               onClick={() => {
+                if (username == '') {
+                  alert('username should not be empty')
+                  return
+                }
+
                 Login(username, '').then(({ data, status }) => {
                   const userID = data.user_id
                   localStorage.setItem('userID', userID)
