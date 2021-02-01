@@ -6,7 +6,7 @@ export default function HourColumn() {
       {new Array(24).fill(0).map((_, index) => (
         <div key={index} style={{ height: 80 }} className="relative">
           <span style={{ position: 'absolute', top: '-10px' }}>{`${index} ${
-            index > 11 ? 'AM' : 'PM'
+            index > 11 ? 'PM' : 'AM'
           }`}</span>
         </div>
       ))}
